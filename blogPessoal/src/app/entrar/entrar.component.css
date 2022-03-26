@@ -1,7 +1,47 @@
 #img-bg{
-    background-image: url('https://i.imgur.com/d5bMdDJ.jpg');
-    min-height: 695px;
+    min-height: 627px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+@keyframes change{
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100%;
+    }
+    100%{
+        background-position: 50% 0%;
+    }
+}
+
+.bg{
+    
+    background:linear-gradient(130deg, #ffffff, #050607, #000000, #df0404);
+    background-size: 200% 200%;
+    animation: change 15s ease infinite;
+}
+
+h1{
+    color: #fff;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px solid rgb(255, 0, 0);
+    transform: translate();
+    padding: 3rem 3rem;
+}
+
+.form-group{
+    color: #fff;
+}
+
+p{
+    color: #fff;
+}
+
+#insta{
+    margin-top: 100px;
 }
