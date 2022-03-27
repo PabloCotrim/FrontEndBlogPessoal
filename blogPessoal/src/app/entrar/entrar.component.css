@@ -19,7 +19,7 @@
 
 .bg{
     
-    background:linear-gradient(130deg, #ffffff, #050607, #000000, #df0404);
+    background:linear-gradient(100deg, #df0404, #77808a, #ffffff, #f1faff);
     background-size: 200% 200%;
     animation: change 15s ease infinite;
 }
