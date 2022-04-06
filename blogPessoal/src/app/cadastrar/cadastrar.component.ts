@@ -1,3 +1,4 @@
+import { AlertasService } from './../service/alertas.service';
 import { UsuarioModel } from './../model/UsuarioModel';
 import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +18,8 @@ export class CadastrarComponent implements OnInit {
 
   constructor(
    private authService: AuthService, // o modulo de cadastrar depende do authservice
-   private router: Router
+   private router: Router,
+   private alertas: AlertasService
   ) { }
 
   ngOnInit() { //dando preferencia para iniciar os metodos presentes aqui
@@ -36,12 +38,12 @@ export class CadastrarComponent implements OnInit {
     this.usuario.tipo = this.tipoUsario
     
     if (this.usuario.senha != this.confirmarSenha) {
-      alert("Senha Invalida")
+      this.alertas.showAlertDanger("Senha Invalida")
     } else {                            // sobscrever a senha em formato json
       this.authService.cadastrar(this.usuario).subscribe((resp: UsuarioModel) => {
         this.usuario = resp
         this.router.navigate(['/entrar'])
-        alert("Cadastro realizado!")
+        this.alertas.showAlertSuccess("Cadastro realizado!")
       })
 
     }

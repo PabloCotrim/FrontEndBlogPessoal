@@ -1,3 +1,4 @@
+import { AlertasService } from './../../service/alertas.service';
 import { environment } from './../../../environments/environment.prod';
 import { TemaService } from './../../service/tema.service';
 import { Route, Router, ActivatedRoute } from '@angular/router';
@@ -16,7 +17,8 @@ export class TemaDeleteComponent implements OnInit {
 
   constructor(private router: Router,
     private temaService: TemaService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private alertas: AlertasService) { }
 
   ngOnInit(){
     if(environment.token == ''){
@@ -34,7 +36,7 @@ export class TemaDeleteComponent implements OnInit {
 
   apagar(){
     this.temaService.deleteTema(this.idTema).subscribe(()=>{
-      alert('Tema Deletado!')
+      this.alertas.showAlertDanger('Tema Deletado!')
       this.router.navigate(['/tema'])
     })
   }

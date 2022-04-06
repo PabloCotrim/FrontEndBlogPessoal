@@ -1,3 +1,4 @@
+import { AlertasService } from './../../service/alertas.service';
 import { environment } from './../../../environments/environment.prod';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../service/auth.service';
@@ -18,7 +19,8 @@ export class UserEditComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private alertas: AlertasService) { }
 
   ngOnInit() {
     window.scroll(0, 0)
@@ -46,10 +48,10 @@ export class UserEditComponent implements OnInit {
     if (this.usuario.senha != this.confirmarSenha) {
       alert("Senha Invalida")
     } else {                            // sobscrever a senha em formato json
-      this.authService.cadastrar(this.usuario).subscribe((resp: UsuarioModel) => {
+      this.authService.atualizar(this.usuario).subscribe((resp: UsuarioModel) => {
         this.usuario = resp
         this.router.navigate(['/inicio'])
-        alert("Atualização realizada, faça login novamente.")
+        this.alertas.showAlertInfo("Atualização realizada, faça login novamente.")
         environment.token = ''
         environment.nome = ''
         environment.foto = ''

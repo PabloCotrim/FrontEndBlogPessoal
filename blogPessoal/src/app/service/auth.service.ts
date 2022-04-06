@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor( private http: HttpClient) { // metodos http
-}
+  constructor(private http: HttpClient) { // metodos http
+  }
 
-  entrar(usuarioLogin:UsuarioLogin): Observable<UsuarioLogin>{  //forçando a usar usuarioLogin
+  entrar(usuarioLogin: UsuarioLogin): Observable<UsuarioLogin> {  //forçando a usar usuarioLogin
     return this.http.post<UsuarioLogin>('http://localhost:8080/usuarios/logar', usuarioLogin)
   }
 
@@ -23,18 +23,35 @@ export class AuthService {
 
   }
 
+  atualizar(usuario: UsuarioModel): Observable<UsuarioModel> {  //forçando a usar usuariomodel
+    return this.http.put<UsuarioModel>('http://localhost:8080/usuarios/atualizar', usuario);
 
-  getByIdUsuario(id: number): Observable<UsuarioModel>{
+  }
+
+
+  getByIdUsuario(id: number): Observable<UsuarioModel> {
     return this.http.get<UsuarioModel>(`http://localhost:8080/usuarios/${id}`)
-}
+  }
 
-  logado(){
+  logado() {
     let ok: boolean = false
 
-    if(environment.token !=''){
+    if (environment.token != '') {
       ok = true
     }
 
     return ok
+
+  }
+
+  adm(){
+    let ok: boolean = false
+
+    if(environment.tipo =='adm'){
+      ok = true
+    }
+
+    return ok
+
   }
 }

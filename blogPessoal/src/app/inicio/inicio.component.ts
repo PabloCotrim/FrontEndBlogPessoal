@@ -1,3 +1,4 @@
+import { AlertasService } from './../service/alertas.service';
 import { AuthService } from './../service/auth.service';
 import { UsuarioModel } from './../model/UsuarioModel';
 import { TemaModel } from './../model/TemaModel';
@@ -18,20 +19,27 @@ export class InicioComponent implements OnInit {
   postagem: PostagemModel = new PostagemModel()
   listaTemas: TemaModel[]
   idTema: number
+  nomeTema: string
+
   idUsuario = environment.id
   user: UsuarioModel = new UsuarioModel()
   listaPostagens: PostagemModel[]
+  tituloPost: string
+
+  key = 'data'
+  reverse = true
 
   constructor(private router: Router,
     private postagemService: PostagemService,
     private temaService: TemaService,
-    private authService:AuthService
+    public authService: AuthService,
+    private alertas: AlertasService
   ) { }
 
   ngOnInit() {
 
     if (environment.token == '') {
-      alert('Sua sessão expirou, faça o login novamente.')
+      this.alertas.showAlertInfo('Sua sessão expirou, faça o login novamente.')
       this.router.navigate(['/entrar'])
     }
 
@@ -45,20 +53,20 @@ export class InicioComponent implements OnInit {
     })
   }
 
-  findByIdTema(){
-    this.temaService.getByIdTema(this.idTema).subscribe((resp: TemaModel)=>{
+  findByIdTema() {
+    this.temaService.getByIdTema(this.idTema).subscribe((resp: TemaModel) => {
       this.tema = resp
     })
   }
 
-  getAllPostagens(){
-    this.postagemService.getAllPostagens().subscribe((resp: PostagemModel[])=>{
+  getAllPostagens() {
+    this.postagemService.getAllPostagens().subscribe((resp: PostagemModel[]) => {
       this.listaPostagens = resp
     })
   }
 
-  findByIdUsuario(){
-    this.authService.getByIdUsuario(this.idUsuario).subscribe((resp: UsuarioModel)=>{
+  findByIdUsuario() {
+    this.authService.getByIdUsuario(this.idUsuario).subscribe((resp: UsuarioModel) => {
       this.user = resp
     })
 
@@ -72,12 +80,33 @@ export class InicioComponent implements OnInit {
     this.user.id = this.idUsuario
     this.postagem.usuario = this.user
 
-    this.postagemService.postPostagem(this.postagem).subscribe((resp: PostagemModel)=>{
+    this.postagemService.postPostagem(this.postagem).subscribe((resp: PostagemModel) => {
       this.postagem = resp
-      alert('Postagem realizada!')
+      this.alertas.showAlertSuccess('Postagem realizada!')
       this.postagem = new PostagemModel()
       this.getAllPostagens()
     })
+  }
+
+  findByTituloPostagem() {
+
+    if (this.tituloPost = '') {
+      this.getAllPostagens()
+    } else {
+      this.postagemService.getByTituloPostagem(this.tituloPost).subscribe((resp: PostagemModel[]) => {
+        this.listaPostagens = resp
+      })
+    }
+  }
+
+  findByNomeTema(){
+    if(this.nomeTema == ''){
+      this.getAllTemas()
+    } else{
+      this.temaService.getByNomeTema(this.nomeTema).subscribe((resp: TemaModel[])=>{
+        this.listaTemas = resp
+      })
+    }
   }
 
 }

@@ -1,3 +1,4 @@
+import { AlertasService } from './../service/alertas.service';
 import { TemaService } from './../service/tema.service';
 import { TemaModel } from './../model/TemaModel';
 import { Router } from '@angular/router';
@@ -16,13 +17,20 @@ export class TemaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private alertas: AlertasService
   ) { }
 
   ngOnInit() {
     if (environment.token == '') {
-      alert('Sua sessão expirou, faça o login novamente.')
+      this.alertas.showAlertInfo('Sua sessão expirou, faça o login novamente.')
       this.router.navigate(['/entrar'])
+    }
+
+    if(environment.tipo != 'adm'){
+      this.alertas.showAlertInfo
+      ('Necessita ser administrador para acessar está informação')
+      this.router.navigate(['/inicio'])
     }
 
     this.findAllTemas()
@@ -37,7 +45,7 @@ export class TemaComponent implements OnInit {
   cadastrar() {
     this.temaService.postTema(this.tema).subscribe((resp: TemaModel) => {
       this.tema = resp
-      alert('Tema Cadastrado!')
+      this.alertas.showAlertSuccess('Tema Cadastrado!')
       this.findAllTemas()
       this.tema = new TemaModel()
     })
