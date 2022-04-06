@@ -5,6 +5,6 @@ export class TemaModel{
 
     public descricao: string;
 
-    public postagem: PostagemModel[] ; //varias postagens pra um tema
+    public postagem: PostagemModel[]; //varias postagens pra um tema
 
 }

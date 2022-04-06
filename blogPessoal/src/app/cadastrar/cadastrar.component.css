@@ -1,6 +1,25 @@
-#img-bg{
-    min-height: 695px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+
+@keyframes change{
+    0%{
+        background-position: 0% 20%;
+    }
+    50%{
+        background-position: 10%;
+    }
+    100%{
+        background-position: 20% 0%;
+    }
+}
+
+.bg{
+    
+    background:linear-gradient(150deg, #000000, #000000, #190303, #6a0909);
+    background-size: 200% 200%;
+    animation: change 5s ease infinite;
+}
+
+
+.ct{
+    color: aliceblue;
+    font-weight: 700;
 }

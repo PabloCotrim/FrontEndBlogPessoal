@@ -26,3 +26,12 @@ color: rgb(23, 107, 146);
 .fa-github:hover{
     color: black;
 }
+
+.bg-footer{
+    background-color: black;
+}
+
+.bg-cop{
+
+    background-color: rgb(106, 0, 0);
+}
